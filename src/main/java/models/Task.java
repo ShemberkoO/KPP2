@@ -13,7 +13,7 @@ public class Task {
 
     protected String title;
     protected String description;
-    protected String assignee;
+
     protected LocalDate deadline;
     protected Priority priority;
     protected Status status;
@@ -34,7 +34,6 @@ public class Task {
         this.title = title;
         this.description = description;
         this.deadline = deadline;
-        this.assignee = assignee;
         this.priority = priority;
         this.status = Status.OPENED;
     }
@@ -51,9 +50,6 @@ public class Task {
     public String getDescription() {return description;}
     public void setDescription(String description) {this.description = description;}
 
-    public String getAssignee() {return assignee;}
-    public void setAssignee(String assignee) {this.assignee = assignee;}
-
     public LocalDate getDeadline() {return deadline;}
     public void setDeadline(LocalDate deadline) {this.deadline = deadline;}
 
@@ -66,7 +62,6 @@ public class Task {
         return  "\nTask " + id +"\n"
                 + "Title: " + title + "\n"
                 + "Description: " + description + "\n"
-                + "Assignee: " + assignee + "\n"
                 + "Deadline: " + deadline + "\n"
                 + "Priority: " + priority + "\n"
                 + "Status: " + status + "\n";

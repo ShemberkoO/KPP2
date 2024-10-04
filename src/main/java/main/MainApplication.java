@@ -33,8 +33,8 @@ public class MainApplication extends Application {
             input = scanner.nextLine();
 
             if ("exit".equals(input)) {
-                Platform.exit(); // Закриває JavaFX
-                return; // Завершує цикл
+                Platform.exit();
+                return;
             }
 
             context.getState().answerToInputAction(input);

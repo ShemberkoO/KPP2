@@ -53,38 +53,37 @@ public class TaskController extends BaseController{
 
     @Override
     public void answerToInputAction(String input) {
-        super.answerToInputAction(input);
         switch (input) {
             case "t1":
                 AddSubtask();
-                break;
+                return;
             case "t2":
                 deleteSubtask();
-                break;
+                return;
             case "t3":
-                watchSubtask();
-                break;
+                watchSubtasks();
+                return;
             case "t4":
                 watchSupertask();
-                break;
+                return;
             case "t5":
                 changeStatus();
-                break;
+                return;
             case "t6":
                 context.setCurrentTask(null);
                 context.setState(new SprintController(context));
-                break;
+                return;
             case "t7":
                 context.setCurrentTask(null);
                 context.setCurrentSprint(null);
                 context.setState(new ProjectController(context));
-                break;
+                return;
             case "t8":
                 context.setCurrentTask(null);
                 context.setCurrentSprint(null);
                 context.setCurrentProject(null);
                 context.setState(new BaseController(context));
-                break;
+                return;
             default:
                 super.answerToInputAction(input);
         }
@@ -99,13 +98,14 @@ public class TaskController extends BaseController{
         }
     }
 
-    private void watchSubtask() {
-        var taskToWatch = selectSubtask();
-        if(taskToWatch.isPresent()){
-            System.out.println(taskToWatch);
+    private void watchSubtasks() {
+        var tasksToWatch = context.getCurrentTask();
+        if(context.getCurrentTask().getClass() == SuperTask.class){
+            System.out.println(((SuperTask)context.getCurrentTask()).getSubTasks());
         }else {
-            System.out.println("Завдання не знайдено");
+            System.out.println("Немає підзавдань");
         }
+        return;
     }
 
     private void watchSupertask() {

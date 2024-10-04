@@ -23,9 +23,9 @@ public class SuperTask extends Task {
 
     @Override
     public String toString() {
-        var str = subTasks.stream().map(t ->  String.valueOf(t.id))
+        var str = subTasks.stream().map(t ->  String.valueOf(t.getId()))
                 .collect(Collectors.joining(", "));
-        return  super.toString() + "\nSub Tasks: " + subTasks;
+        return  super.toString() + "\nSub Tasks: " + str;
     }
 }
 

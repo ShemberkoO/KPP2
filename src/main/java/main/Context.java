@@ -7,6 +7,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -43,8 +46,6 @@ public class Context {
 
     public Context() {
         readDataFromJson("src/main/resources/data.json");
-
-//        Runtime.getRuntime().addShutdownHook(new Thread(this::save));
     }
 
     public void save(){
@@ -78,21 +79,50 @@ public class Context {
 
     public void readDataFromJson(String filePath) {
         Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Task.class, new TaskDeserializer())
                 .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .setPrettyPrinting()
                 .create();
         try (FileReader reader = new FileReader(filePath)) {
             DataModel data = gson.fromJson(reader, DataModel.class);
-            // Перевіряємо, чи дані були завантажені
             if (data != null) {
                 dataModel = data;
             } else {
-                // Якщо дані не завантажено, створюємо новий DataModel
                 dataModel = new DataModel();
             }
+            removeTaskDuplicates();
         } catch (IOException e) {
-            // В разі помилки (файл не знайдено або інша проблема), створюємо новий DataModel
             dataModel = new DataModel();
             e.printStackTrace();
+        }
+    }
+
+    private void removeTaskDuplicates() {
+        Map<Integer, Task> uniqueTasksMap = new HashMap<>();
+
+        for (Project project : dataModel.getProjects()) {
+            for (Sprint sprint : project.getSprints()) {
+                List<Task> tasks = sprint.getTasks();
+                for (Task task : tasks) {
+                    if (!uniqueTasksMap.containsKey(task.getId())) {
+                        uniqueTasksMap.put(task.getId(), task);
+                    }
+                }
+
+                for (Task task : tasks) {
+                    if (task instanceof SuperTask) {
+                        SuperTask superTask = (SuperTask) task;
+                        List<Task> subTasks = superTask.getSubTasks();
+
+                        for (int i = 0; i < subTasks.size(); i++) {
+                            Task subTask = subTasks.get(i);
+                            if (uniqueTasksMap.containsKey(subTask.getId())) {
+                                subTasks.set(i, uniqueTasksMap.get(subTask.getId()));
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 

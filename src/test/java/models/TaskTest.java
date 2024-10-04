@@ -48,11 +48,6 @@ public class TaskTest {
         assertEquals("COMPLETED", task.getStatus());
     }
 
-    @Test
-    public void testSetAssignee() {
-        task.setAssignee("John Doe");
-        assertEquals("John Doe", task.getAssignee());
-    }
 
     @Test
     public void testSetDeadline() {
@@ -66,7 +61,6 @@ public class TaskTest {
         String expected = "\nTask " + task.getId() + "\n"
                 + "Title: Test Task\n"
                 + "Description: This is a test description\n"
-                + "Assignee: null\n"
                 + "Deadline: " + LocalDate.now() + "\n"
                 + "Priority: MEDIUM\n"
                 + "Status: OPENED\n";
