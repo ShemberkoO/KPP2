@@ -22,13 +22,13 @@ public class SecondTask {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = br.readLine()) != null) {
-                contentBuilder.append(line).append("\n"); // Додаємо рядок до вмісту
+                contentBuilder.append(line).append("\n");
             }
             text = contentBuilder.toString();
-            return true; // Успішно прочитано
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
-            return false; // Помилка при читанні
+            return false;
         }
     }
 
@@ -42,7 +42,6 @@ public class SecondTask {
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(text);
-
         while (matcher.find()) {
             System.out.println("Found: " + matcher.group());
             trios.add(matcher.group());

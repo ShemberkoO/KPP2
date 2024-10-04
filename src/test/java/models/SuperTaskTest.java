@@ -16,7 +16,6 @@ class SuperTaskTest {
 
     @BeforeEach
     void setUp() {
-        // Створення основної суперзадачі та підзадач
         superTask = new SuperTask("Main Task", "This is a super task",
                 LocalDate.of(2024, 12, 31), Priority.HIGH);
 
@@ -28,21 +27,17 @@ class SuperTaskTest {
 
     @Test
     void testAddSubTask() {
-        // Додавання підзадач до суперзадачі
         superTask.addSubTask(subTask1);
         superTask.addSubTask(subTask2);
 
-        // Перевіряємо, що кількість підзадач правильна
         assertEquals(2, superTask.getSubTasks().size());
     }
 
     @Test
     void testGetSubTasks() {
-        // Додавання підзадач
         superTask.addSubTask(subTask1);
         superTask.addSubTask(subTask2);
 
-        // Перевірка, що повернутий список містить додані підзадачі
         List<Task> subTasks = superTask.getSubTasks();
         assertTrue(subTasks.contains(subTask1));
         assertTrue(subTasks.contains(subTask2));
@@ -50,7 +45,6 @@ class SuperTaskTest {
 
     @Test
     void testTaskPriority() {
-        // Перевірка зміни пріоритету
         superTask.setPriority(Priority.LOW);
         assertEquals("LOW", superTask.getPriority());
     }

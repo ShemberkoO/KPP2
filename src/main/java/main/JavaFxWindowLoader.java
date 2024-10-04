@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class JavaFxWindowLoader extends Application {
 
-    private static boolean isLaunched = false;  // Контроль запуску JavaFX
+    private static boolean isLaunched = false;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -23,11 +23,9 @@ public class JavaFxWindowLoader extends Application {
 
     public static void openNewWindow(Context context) {
         if (!isLaunched) {
-            // Якщо JavaFX ще не запущений, запускаємо
             new Thread(() -> Application.launch(JavaFxWindowLoader.class)).start();
         }
 
-        // Відкриваємо нове вікно в JavaFX потоці
         Platform.runLater(() -> {
             Stage newStage = new Stage();
             try {
